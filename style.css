@@ -1,0 +1,173 @@
+:root {
+    --bg-color: #f0f4f8;
+    --slot-yellow: #fff3cd;
+    --zone-blue: #cfe2ff;
+    --zone-green: #d1e7dd;
+    --card-border: #e0e0e0;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    font-family: sans-serif;
+    /* Prevents double-tap zoom on iOS */
+    touch-action: manipulation; 
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* --- THE GRID --- */
+.grid-area {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    aspect-ratio: 4 / 2;
+    padding: 20px 0;
+}
+
+.grid-slot {
+    background-color: var(--slot-yellow);
+    border-radius: 12px;
+    border: 3px solid transparent;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.1s, border-color 0.3s ease;
+    aspect-ratio: 1; /* Make slots square */
+}
+
+.grid-slot:active {
+    transform: scale(0.98);
+}
+
+/* The base image on the board */
+.grid-slot > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7; /* Slightly faded until matched */
+}
+
+/* Green border when matched */
+.grid-slot.matched {
+    border-color: #4CAF50;
+    border-width: 4px;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+    animation: matchPulse 0.3s ease-out;
+}
+
+@keyframes matchPulse {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+}
+
+/* --- BOTTOM AREA --- */
+.bottom-area {
+    display: flex;
+    gap: 20px;
+    height: 180px; /* Fixed height for bottom row */
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.blue-zone, .green-zone {
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.blue-zone {
+    background-color: var(--zone-blue);
+    flex: 1; /* Takes remaining space */
+    border: 2px dashed #a0bbf1;
+}
+
+.green-zone {
+    background-color: var(--zone-green);
+    width: 180px; /* Fixed width for deck area */
+    flex-shrink: 0;
+    border: 2px solid #a8d3c2;
+    border-radius: 20px; /* More rounded as shown in UI plan */
+}
+
+.clickable { cursor: pointer; }
+.clickable:active img { transform: scale(0.95); }
+
+/* Images inside the bottom zones (cards) */
+.bottom-area img {
+    height: 90%;
+    width: auto;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    object-fit: contain;
+}
+
+/* Looks different when empty */
+.blue-zone.empty::after {
+    content: "Draw a card ->";
+    color: #7aa2e9;
+    font-weight: bold;
+}
+
+/* Make deck look disabled when empty */
+.green-zone.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+/* --- ANIMATIONS --- */
+.shake {
+    animation: shake-animation 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    border-color: red !important;
+}
+
+@keyframes shake-animation {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(4px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+    40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+/* Victory Screen */
+#victory-screen {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(255,255,255,0.9); z-index: 100;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+}
+#victory-screen.hidden { display: none !important; }
+#victory-screen h1 { font-size: 3em; color: #4CAF50; }
+#victory-screen button {
+    padding: 15px 30px; font-size: 1.5em;
+    background: #4CAF50; color: white; border: none; border-radius: 50px;
+    cursor: pointer;
+}

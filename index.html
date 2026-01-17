@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Matching Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="grid-area">
+            <div class="grid-slot" data-id="1"><img src="assets/images/1.jpg" alt="Picture 1"></div>
+            <div class="grid-slot" data-id="2"><img src="assets/images/2.jpg" alt="Picture 2"></div>
+            <div class="grid-slot" data-id="3"><img src="assets/images/3.jpg" alt="Picture 3"></div>
+            <div class="grid-slot" data-id="4"><img src="assets/images/4.jpg" alt="Picture 4"></div>
+            <div class="grid-slot" data-id="5"><img src="assets/images/5.jpg" alt="Picture 5"></div>
+            <div class="grid-slot" data-id="6"><img src="assets/images/6.jpg" alt="Picture 6"></div>
+            <div class="grid-slot" data-id="7"><img src="assets/images/7.jpg" alt="Picture 7"></div>
+            <div class="grid-slot" data-id="8"><img src="assets/images/8.jpg" alt="Picture 8"></div>
+        </div>
+
+        <div class="bottom-area">
+            <div id="drawn-card-slot" class="blue-zone empty">
+                 </div>
+
+            <div id="deck-slot" class="green-zone clickable">
+                <img src="assets/images/card-back.png" alt="Deck">
+            </div>
+        </div>
+    </div>
+    
+    <div id="victory-screen" class="hidden">
+        <h1>Well Done!</h1>
+        <button onclick="location.reload()">Play Again</button>
+    </div>
+
+    <audio id="snd-correct" src="assets/sounds/correct.mp3" preload="auto"></audio>
+    <audio id="snd-wrong" src="assets/sounds/wrong.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
